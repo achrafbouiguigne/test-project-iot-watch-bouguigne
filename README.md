@@ -1,7 +1,24 @@
-### Backend
-- Python Flask
-- SQLite3 pour le stockage des données
-- IA : Modèle LSTM bidirectionnel avec TensorFlow/Keras pour la prédiction des températures futures
+
+##  Contribution : Intégration d’un chatbot RAG (FellahGPT)
+
+Cette contribution ajoute un chatbot intelligent spécialisé dans l’agriculture marocaine, accessible via un bouton flottant sur l’interface web.
+
+---
+
+###  Fichiers ajoutés
+
+#### Backend (`/backend/RAG`)
+- `rag.py` : moteur RAG utilisant le contenu de documents PDF.
+- `requirements.txt` : dépendances spécifiques au chatbot.
+- `agri_laws_in_morocco.pdf`, `agro_climate_zones.pdf`, `corps_techniques.pdf` : documents utilisés pour répondre aux questions.
+- `.env` : variables d’environnement (clés API).
+
+#### Frontend (`/frontend/ReactApp`)
+- `src/components/RAGchat.jsx` : composant chatbot React.
+- `src/api/rag.js` : module API pour interroger le backend.
+- Modification de `src/pages/Home.jsx` : intégration du composant `<RAGchat />`.
+- Bouton flottant activé via la bibliothèque `lucide-react`.
+
 
 ## Project Structure
 ```
@@ -10,6 +27,16 @@ iot-temp-watch/
 │   └── workflows/
 │       └── ci.yml
 ├── backend/
+    ├──RAG/  
+        └── rag.py
+│       └── requirments.txt
+        └──agri_laws_in_morocco.pdf
+        └──agro_climate_zones.pdf
+        └──corps_techniques.pdf
+
+
+
+│   ├──
 │   ├── app.py
 │   ├── models.py
 │   ├── requirements.txt
@@ -24,6 +51,14 @@ iot-temp-watch/
 ├── frontend/
 │   └── ReactApp/
 │       ├── src/
+           └── api/
+               └── rag.js  i puted just the added 
+            └── api/
+                └── RAGChat.jsx
+
+       
+              
+
 │       ├── public/
 │       ├── dist/
 │       └── package.json
@@ -31,77 +66,79 @@ iot-temp-watch/
 └── README.md
 ```
 
-## Configuration manuelle
+---
 
-1. Télécharger Python 3.10 depuis le site officiel :
-     https://www.python.org/downloads/release/python-3109/
+### ⚙️ Installation Backend
+
+1. Activer l’environnement Python :
+
+   ```bash
+   source iot-env/bin/activate  # ou iot-env\Scripts\activate sous Windows
+
+
+2.Installer les dépendances du chatbot :
  
- Créer un environnement virtuel Python :
-   ```bash
-   python3.10 -m venv iot-env
-   ```
-Activer l'environnement virtuel :
-   - Windows :
-     ```bash
-     iot-env\Scripts\activate
-     ```
+   pip install -r backend/RAG/requirements.txt
 
-2. ou bien Utiliser conda pour créer un environnement compatible :
- Windows PowerShell
- ```bash
-  wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe" -outfile ".\miniconda.exe"
-  Start-Process -FilePath ".\miniconda.exe" -ArgumentList "/S" -Wait
-  del .\miniconda.exe
- ```
- ```bash
- conda create -n iot-env python=3.10
- conda activate iot-env
- ```
-3. Installer les dépendances Python :
-   ```bash
-   cd backend
-   pip install -r requirements.txt
-   ```
+   Contenu typique de requirements.txt :
 
-4. Créer un fichier `.env` avec le contenu suivant :
-   ```
-   PORT=5000
-   DATABASE_PATH=temperature.db
-   DEBUG=True
-   ```
+         flask
+         flask-cors
+         pymupdf
+         faiss-cpu
+         scikit-learn
+         google-generativeai
+         langchain
+         python-dotenv
 
-5. Lancer l'application Flask :
-   ```bash
-   cd backend
-   python app.py
-   ```
+3.Créer ou vérifier le fichier .env dans backend/RAG/ avec :
 
-### Configuration du Frontend
 
-1. Depuis le répertoire frontend, installer les dépendances :
-   ```bash
-   cd ReactApp
-   npm install
-   ```
+         GOOGLE_API_KEY=AIzaSyCAi1XPo_dBVxTjTln7LVJVMvBgRd1Qzgk
+         GOOGLE_MODEL_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash"
 
-2. Créer un fichier `.env.local` avec le contenu suivant :
-   ```
-   VITE_API_URL=https://api.open-meteo.com/v1/forecast
-   VITE_API_BASE_URL=http://localhost:5000
-   ```
+4.Installation Frontend
+       Accéder au répertoire frontend :
 
-3. Lancer le serveur de développement :
-   ```bash
-   cd frontend/ReactApp
-   npm run dev
-   ```
 
-## Points de terminaison de l'API
+                cd frontend/
+                Installer la dépendance pour le bouton flottant :
 
-Le backend fournit les points de terminaison suivants :
 
-- `/data/latest` – Obtenir la dernière température avec tendance
-- `/data/history` – Obtenir l'historique des températures des dernières heures
+                npm install lucide-react
+                Lancer le serveur de développement React :
 
-## Projet origine
-- https://github.com/agri40/test-project-iot-watch.git
+
+npm run dev
+
+Utilisation
+Le chatbot s’active via un bouton flottant.
+
+Posez des questions sur l’agriculture, les lois ou le climat.
+
+FellahGPT génère des réponses basées sur les documents PDF intégrés.
+
+Projet d’origine
+https://github.com/Agri40-Stage/test-project-iot-wat
+
+
+
+
+## Annexes
+
+### État du projet d’origine
+
+Toutes les étapes d’installation et de configuration initiales du projet (backend Flask, base SQLite, frontend React, installation des dépendances, lancement des serveurs) ont été réalisées dans la branche principale (`main`) du dépôt d’origine.
+
+### Ajout pour le futur : Chatbot RAG FellahGPT
+
+Cette branche/fonctionnalité s’appuie sur le projet existant et ajoute une nouvelle fonctionnalité d’intelligence artificielle sous la forme d’un chatbot RAG (Retrieval-Augmented Generation), spécialisé en agriculture marocaine.
+
+Ainsi, cette contribution ne modifie pas les bases déjà mises en place mais :
+
+- Ajoute un dossier `RAG` dans le backend contenant le moteur, les documents, et la configuration.
+- Intègre un composant React dans le frontend avec un bouton flottant pour le chatbot.
+- Nécessite une installation et configuration supplémentaires détaillées dans ce README pour initialiser le pipeline RAG.
+
+---
+
