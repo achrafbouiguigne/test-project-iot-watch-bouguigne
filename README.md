@@ -93,9 +93,10 @@ iot-temp-watch/
 │   └── history.js
 ├── frontend/
 │   └────── src/
-              └──  api/rag.js 
-              └── components/RAGchat.jsx 
-│ │     └── pages/Home.jsx 
+          └── api/rag.js
+          └── components/RAGChat.jsx
+          └── pages/Home.jsx
+
 │       ├── public/
 │       ├── dist/
 │       └── package.json
