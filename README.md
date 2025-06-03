@@ -75,14 +75,6 @@ iot-temp-watch/
 │   ├── app.py
 │   ├── models.py
 │   ├── requirements.txt
-    ├── RAG/ 
-         └──rag.py
-│        └── agri_laws.pdf
-│        └──agro_climate_zones.pdf
-│        └── corps_techniques.pdf
-         └── .env
-        
-│ └── .env
 │   ├── database/
 │   ├── model/
 │   │   └── m.keras
@@ -91,13 +83,14 @@ iot-temp-watch/
 ├── data/
 │   └── latest.js
 │   └── history.js
-frontend/
+├── frontend/
 │   └────── src/
 │       ├── public/
 │       ├── dist/
 │       └── package.json
 │
 └── README.md
+```
 
 ## Configuration manuelle
 
@@ -143,23 +136,7 @@ Activer l'environnement virtuel :
    cd backend
    python app.py
    ```
-## 💬 Fonctionnalité IA : Chatbot FellahGPT (RAG)
 
-Une nouvelle fonctionnalité a été ajoutée : **FellahGPT**, un chatbot intelligent spécialisé dans l’agriculture marocaine, reposant sur des documents PDF indexés localement.
-### 🔧 Installation (Backend RAG)
-```bash
-cd backend/RAG
-pip install -r requirements.txt
-````
-Créer un fichier .env :
-````bash
-GOOGLE_API_KEY=AIzaSyCAi1XPo_dBVxTjTln7LVJVMvBgRd1Qzgk
-GOOGLE_MODEL_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash
-````
-Lancer le moteur RAG :
-````bash
-python rag.py
-````
 ### Configuration du Frontend
 
 1. Depuis le répertoire frontend, installer les dépendances :
@@ -177,7 +154,6 @@ python rag.py
 3. Lancer le serveur de développement :
    ```bash
    cd frontend/ReactApp
-   npm install lucide-react
    npm run dev
    ```
 
@@ -187,23 +163,6 @@ Le backend fournit les points de terminaison suivants :
 
 - `/data/latest` – Obtenir la dernière température avec tendance
 - `/data/history` – Obtenir l'historique des températures des dernières heures
-
-Le chatbot est accessible via un bouton 💬 flottant sur l’interface. Il permet d’interroger des documents comme :
-
-Lois agricoles marocaines
-
-Zones agro-climatiques
-
-Fiches techniques de culture
-
-📚 Technologies utilisées
-Flask, FAISS, LangChain, Google Generative AI
-
-React, Vite
-
-Python, JavaScript
-
-
 
 ## Projet origine
 - https://github.com/agri40/test-project-iot-watch.git
