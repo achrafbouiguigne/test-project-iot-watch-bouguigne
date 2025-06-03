@@ -1,24 +1,69 @@
+# 🌡️ IoT Temp Watch
 
-##  Contribution : Intégration d’un chatbot RAG (FellahGPT)
+A full-stack mini project that fetches real-time temperature data from an online sensor API and displays it on a simple dashboard.
 
-Cette contribution ajoute un chatbot intelligent spécialisé dans l’agriculture marocaine, accessible via un bouton flottant sur l’interface web.
+> ⏱ This project is designed as a 2-day technical test for technician-level developers.
 
 ---
 
-###  Fichiers ajoutés
+## 📌 Project Goal
 
-#### Backend (`/backend/RAG`)
-- `rag.py` : moteur RAG utilisant le contenu de documents PDF.
-- `requirements.txt` : dépendances spécifiques au chatbot.
-- `agri_laws_in_morocco.pdf`, `agro_climate_zones.pdf`, `corps_techniques.pdf` : documents utilisés pour répondre aux questions.
-- `.env` : variables d’environnement (clés API).
+Build a small IoT-enabled web app that:
+- Retrieves temperature or humidity data from a public sensor API
+- Stores and exposes the data via a backend service
+- Displays the data in real time or at regular intervals via a frontend interface
+- integrate AI features (LLM, RAG, Model deep learning, ...)
 
-#### Frontend (`/frontend/ReactApp`)
-- `src/components/RAGchat.jsx` : composant chatbot React.
-- `src/api/rag.js` : module API pour interroger le backend.
-- Modification de `src/pages/Home.jsx` : intégration du composant `<RAGchat />`.
-- Bouton flottant activé via la bibliothèque `lucide-react`.
+---
 
+## ⚙️ Stack Suggestions
+
+### Backend
+Python (Flask)
+SQLite3 pour la persistance
+IA : Modèle LSTM bidirectionnel (TensorFlow/Keras)
+
+### Frontend
+- React (preferred).
+
+### Optional
+- WebSocket for real-time updates
+- SQLite or local JSON for persistence
+- Docker/Docker Compose
+- GitHub Actions CI
+- How to Contribute : https://www.youtube.com/embed/yzeVMecydCE
+
+---
+## 🌐 Data Source
+
+Use one of the following free/public sensor APIs:
+- [Open-Meteo API](https://open-meteo.com/en/docs)
+- [ThingSpeak](https://thingspeak.com/)
+- Any dummy IoT API or mock sensor server
+---
+
+## ✅ What You’ll Be Assessed On
+
+| Category        | Details                                                                 |
+|----------------|-------------------------------------------------------------------------|
+| Figma design    |  propose or improve a design figma
+| 🏗 Project Setup | Proper use of JHipster to scaffold and configure the app               |
+| 🔒 Authentication | Secure login system using JWT and protected API routes                  |
+| 💻 Frontend       | Functional React UI to manage employees with proper state handling     |
+| 📦 API Usage      | Clean and secure usage of RESTful APIs                                 |
+| 🧼 Code Quality   | Maintainable, modular, and readable code                               |
+| 🔁 Git Practices  | Use of Git flow, meaningful commit messages, and clean pull requests   |
+
+## Evaluation Criteria
+| Area              | Importance |
+|-------------------|------------|
+| Git usage         | ★★★★☆     |
+| Backend functionality | ★★★★☆ |
+| Frontend UX       | ★★★★☆     |
+| Code quality      | ★★★★☆     |
+| Documentation     | ★★★★☆     |
+| Bonus features    | ★★☆☆☆     |
+| IoT               | ★★★★☆     |
 
 ## Project Structure
 ```
@@ -27,19 +72,17 @@ iot-temp-watch/
 │   └── workflows/
 │       └── ci.yml
 ├── backend/
-    ├──RAG/  
-        └── rag.py
-│       └── requirments.txt
-        └──agri_laws_in_morocco.pdf
-        └──agro_climate_zones.pdf
-        └──corps_techniques.pdf
-
-
-
-│   ├──
 │   ├── app.py
 │   ├── models.py
 │   ├── requirements.txt
+    ├── RAG/ 
+         └──rag.py
+│        └── agri_laws.pdf
+│        └──agro_climate_zones.pdf
+│        └── corps_techniques.pdf
+         └── .env
+        
+│ └── .env
 │   ├── database/
 │   ├── model/
 │   │   └── m.keras
@@ -49,16 +92,10 @@ iot-temp-watch/
 │   └── latest.js
 │   └── history.js
 ├── frontend/
-│   └── ReactApp/
-│       ├── src/
-           └── api/
-               └── rag.js  i puted just the added 
-            └── api/
-                └── RAGChat.jsx
-
-       
-              
-
+│   └────── src/
+              └──  api/rag.js 
+              └── components/RAGchat.jsx 
+│ │     └── pages/Home.jsx 
 │       ├── public/
 │       ├── dist/
 │       └── package.json
@@ -66,79 +103,111 @@ iot-temp-watch/
 └── README.md
 ```
 
----
+## Configuration manuelle
 
-### ⚙️ Installation Backend
-
-1. Activer l’environnement Python :
-
-   ```bash
-   source iot-env/bin/activate  # ou iot-env\Scripts\activate sous Windows
-
-
-2.Installer les dépendances du chatbot :
+1. Télécharger Python 3.10 depuis le site officiel :
+     https://www.python.org/downloads/release/python-3109/
  
-   pip install -r backend/RAG/requirements.txt
+ Créer un environnement virtuel Python :
+   ```bash
+   python3.10 -m venv iot-env
+   ```
+Activer l'environnement virtuel :
+   - Windows :
+     ```bash
+     iot-env\Scripts\activate
+     ```
 
-   Contenu typique de requirements.txt :
+2. ou bien Utiliser conda pour créer un environnement compatible :
+ Windows PowerShell
+ ```bash
+  wget "https://repo.anaconda.com/miniconda/Miniconda3-latest-Windows-x86_64.exe" -outfile ".\miniconda.exe"
+  Start-Process -FilePath ".\miniconda.exe" -ArgumentList "/S" -Wait
+  del .\miniconda.exe
+ ```
+ ```bash
+ conda create -n iot-env python=3.10
+ conda activate iot-env
+ ```
+3. Installer les dépendances Python :
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   ```
 
-         flask
-         flask-cors
-         pymupdf
-         faiss-cpu
-         scikit-learn
-         google-generativeai
-         langchain
-         python-dotenv
+4. Créer un fichier `.env` avec le contenu suivant :
+   ```
+   PORT=5000
+   DATABASE_PATH=temperature.db
+   DEBUG=True
+   ```
 
-3.Créer ou vérifier le fichier .env dans backend/RAG/ avec :
+5. Lancer l'application Flask :
+   ```bash
+   cd backend
+   python app.py
+   ```
+## 💬 Fonctionnalité IA : Chatbot FellahGPT (RAG)
+
+Une nouvelle fonctionnalité a été ajoutée : **FellahGPT**, un chatbot intelligent spécialisé dans l’agriculture marocaine, reposant sur des documents PDF indexés localement.
+### 🔧 Installation (Backend RAG)
+```bash
+cd backend/RAG
+pip install -r requirements.txt
+````
+Créer un fichier .env :
+````bash
+GOOGLE_API_KEY=AIzaSyCAi1XPo_dBVxTjTln7LVJVMvBgRd1Qzgk
+GOOGLE_MODEL_URL=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash
+````
+Lancer le moteur RAG :
+````bash
+python rag.py
+````
+### Configuration du Frontend
+
+1. Depuis le répertoire frontend, installer les dépendances :
+   ```bash
+   cd ReactApp
+   npm install
+   ```
+
+2. Créer un fichier `.env.local` avec le contenu suivant :
+   ```
+   VITE_API_URL=https://api.open-meteo.com/v1/forecast
+   VITE_API_BASE_URL=http://localhost:5000
+   ```
+
+3. Lancer le serveur de développement :
+   ```bash
+   cd frontend/ReactApp
+   npm install lucide-react
+   npm run dev
+   ```
+
+## Points de terminaison de l'API
+
+Le backend fournit les points de terminaison suivants :
+
+- `/data/latest` – Obtenir la dernière température avec tendance
+- `/data/history` – Obtenir l'historique des températures des dernières heures
+
+Le chatbot est accessible via un bouton 💬 flottant sur l’interface. Il permet d’interroger des documents comme :
+
+Lois agricoles marocaines
+
+Zones agro-climatiques
+
+Fiches techniques de culture
+
+📚 Technologies utilisées
+Flask, FAISS, LangChain, Google Generative AI
+
+React, Vite
+
+Python, JavaScript
 
 
-         GOOGLE_API_KEY=AIzaSyCAi1XPo_dBVxTjTln7LVJVMvBgRd1Qzgk
-         GOOGLE_MODEL_URL="https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash"
 
-4.Installation Frontend
-       Accéder au répertoire frontend :
-
-
-                cd frontend/
-                Installer la dépendance pour le bouton flottant :
-
-
-                npm install lucide-react
-                Lancer le serveur de développement React :
-
-
-npm run dev
-
-Utilisation
-Le chatbot s’active via un bouton flottant.
-
-Posez des questions sur l’agriculture, les lois ou le climat.
-
-FellahGPT génère des réponses basées sur les documents PDF intégrés.
-
-Projet d’origine
-https://github.com/Agri40-Stage/test-project-iot-wat
-
-
-
-
-## Annexes
-
-### État du projet d’origine
-
-Toutes les étapes d’installation et de configuration initiales du projet (backend Flask, base SQLite, frontend React, installation des dépendances, lancement des serveurs) ont été réalisées dans la branche principale (`main`) du dépôt d’origine.
-
-### Ajout pour le futur : Chatbot RAG FellahGPT
-
-Cette branche/fonctionnalité s’appuie sur le projet existant et ajoute une nouvelle fonctionnalité d’intelligence artificielle sous la forme d’un chatbot RAG (Retrieval-Augmented Generation), spécialisé en agriculture marocaine.
-
-Ainsi, cette contribution ne modifie pas les bases déjà mises en place mais :
-
-- Ajoute un dossier `RAG` dans le backend contenant le moteur, les documents, et la configuration.
-- Intègre un composant React dans le frontend avec un bouton flottant pour le chatbot.
-- Nécessite une installation et configuration supplémentaires détaillées dans ce README pour initialiser le pipeline RAG.
-
----
-
+## Projet origine
+- https://github.com/agri40/test-project-iot-watch.git
